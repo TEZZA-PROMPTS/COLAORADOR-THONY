@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>THONY ALLEN • SURF PROMPTS</title>
+
+  <!-- CONFIGURAÇÃO PARA O LINK (MODIFICADA PARA OCULTAR IMAGENS) -->
+  <meta property="og:title" content="THONY ALLEN • TEZZA PROMPTS">
+  <meta property="og:description" content="TEZZA PROMPTS OFICIAL">
+  <meta property="og:type" content="website">
+  <!-- Removendo og:image explicitamente e adicionando robots -->
+  <meta name="robots" content="noimageindex, noarchive">
+  <meta name="googlebot" content="noimageindex">
+  <meta name="description" content="TEZZA PROMPTS OFICIAL">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bangers&family=Press+Start+2P&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --beach-sand: #F5E6CA;
+      --ocean-blue: #0077B6;
+      --tropical-green: #2D6A4F;
+      --sun-yellow: #FFD166;
+      --foam-white: #F8F9FA;
+      --deep-ocean: #03045E;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Poppins', sans-serif;
+      background: #000;
+      min-height:100vh;
+      overflow-x:hidden;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* TÉCNICA 1: Imagem de fundo via pseudo-elemento ou classe com background-image oculta scrapers básicos */
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      /* A URL da imagem foi movida para o JS para evitar detecção no carregamento estático do crawler */
+      background-size: cover;
+      z-index: -1;
+      filter: brightness(0.7);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,119,182,0.3), rgba(3,4,94,0.6));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* OVERLAY DE INÍCIO */
+    #startOverlay {
+      position: fixed;
+      inset: 0;
+      /* Fundo movido para o JS */
+      background-size: cover;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+
+    #startOverlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      z-index: -1;
+    }
+
+    .intro-gif-main {
+      width: 350px;
+      max-width: 90%;
+      z-index: 2;
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+    }
+
+    .corner-gif-wave {
+      position: absolute;
+      bottom: -10px; 
+      left: 0;
+      right: 0;
+      width: 100%; 
+      height: auto;
+      z-index: 3;
+      filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+      animation: pulseGif 2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGif {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+
+    /* HEADER */
+    header{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:60px 20px 40px;
+      width: 100%;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .logo-gif {
+      width: 120px;
+      height: auto;
+      filter: drop-shadow(0 0 15px var(--ocean-blue));
+    }
+
+    .highlight-text {
+      font-family: 'Bangers', cursive;
+      color: var(--sun-yellow);
+      letter-spacing: 4px;
+      text-shadow: 
+        4px 4px 0px #000,
+        -1px -1px 0px #000,  
+        1px -1px 0px #000,
+        -1px  1px 0px #000,
+        1px  1px 0px #000;
+      display: inline-block;
+    }
+
+    .pixel-text {
+      font-size: 4.5rem;
+    }
+
+    .sub-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: var(--beach-sand);
+      margin-top: 10px;
+      letter-spacing: 2px;
+      opacity: 0.9;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .main-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1000px;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* WAVE STYLE PROMPT BOX */
+    .wave-frame {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      background: var(--beach-sand);
+      border-radius: 30px 30px 100px 30px;
+      padding: 40px;
+      border: 8px solid var(--deep-ocean);
+      box-shadow: 20px 20px 0px var(--ocean-blue);
+      overflow: hidden;
+    }
+
+    .wave-frame::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 15px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230077B6" fill-opacity="1" d="M0,160L48,176C96,192,192,224,288,224C384,224,480,192,576,165.3C672,139,768,117,864,128C960,139,1056,181,1152,186.7C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>');
+      background-size: cover;
+    }
+
+    .prompt-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 25px;
+      border-bottom: 4px dashed var(--deep-ocean);
+      padding-bottom: 15px;
+    }
+
+    .prompt-header .highlight-text {
+      font-size: 2.2rem;
+      color: var(--tropical-green);
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .gemini-text {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      color: var(--ocean-blue);
+      margin-top: 5px;
+      text-shadow: 1px 1px 0px #000;
+    }
+
+    .prompt-display {
+      background: var(--foam-white);
+      border: 4px solid var(--ocean-blue);
+      border-radius: 15px;
+      padding: 30px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.15rem;
+      color: var(--deep-ocean);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 180px;
+      position: relative;
+      box-shadow: inset 4px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* BOTÃO SURFISTA */
+    .copy-btn {
+      margin-top: 35px;
+      width: 100%;
+      padding: 22px;
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      background: var(--sun-yellow);
+      color: var(--deep-ocean);
+      border: 5px solid var(--deep-ocean);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      box-shadow: 0px 10px 0px var(--ocean-blue);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 15px 0px var(--ocean-blue);
+      background: var(--foam-white);
+    }
+
+    .copy-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0px 0px 0px var(--ocean-blue);
+    }
+
+    /* EFEITO DE SUCESSO */
+    .smoke-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 119, 182, 0.9);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .smoke-overlay.active {
+      opacity: 1;
+    }
+
+    .jutsu-text {
+      font-family: 'Bangers', cursive;
+      font-size: 5rem;
+      color: var(--sun-yellow);
+      text-shadow: 4px 4px 0px #000;
+      animation: wavePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-align: center;
+    }
+
+    @keyframes wavePop {
+      0% { transform: scale(0) translateY(100px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 40px;
+      width: 100%;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.65rem;
+      color: var(--beach-sand);
+      line-height: 2.5;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    footer a {
+      color: var(--sun-yellow);
+      text-decoration: none;
+      border-bottom: 2px solid var(--ocean-blue);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 900px) {
+      .main-content {
+        flex-direction: column;
+      }
+      .wave-frame {
+        padding: 30px 20px;
+        border-radius: 20px 20px 60px 20px;
+      }
+      .pixel-text { font-size: 3rem; }
+      .jutsu-text { font-size: 3rem; }
+      .logo-gif { width: 80px; }
+      .intro-gif-main { width: 250px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Overlay de Início -->
+  <div id="startOverlay" onclick="initPage()">
+    <!-- TÉCNICA 2: Atributos src vazios e carregados via JS para enganar crawlers de imagem -->
+    <img id="introGif" src="" alt="Zóio de Lula" class="intro-gif-main">
+    <img id="cornerGif" src="" alt="Onda Pulsante" class="corner-gif-wave">
+  </div>
+
+  <div class="bg-image" id="bgImg"></div>
+
+  <audio id="bgMusic" loop>
+    <source src="musicthony.mp3" type="audio/mpeg">
+  </audio>
+
+  <header>
+    <div class="logo-container">
+      <img id="gifLeft" src="" class="logo-gif">
+      <h1 class="pixel-text highlight-text">THONY ALLEN</h1>
+      <img id="gifRight" src="" class="logo-gif" style="transform: scaleX(-1);">
+    </div>
+    <p class="sub-title">TEZZA PROMPTS OFICIAL</p>
+  </header>
+
+  <div class="main-content">
+    <div class="wave-frame">
+      <div class="prompt-header">
+        <h2 class="highlight-text">THONY ALLEN COLABORADOR</h2>
+        <div class="gemini-text">GEMINI [MODO PRO]</div>
+      </div>
+      
+      <div class="prompt-display" id="promptContent">
+
+Ultra-realistic cinematic avatar 3D male portrait, Blender Cycles render in CGI, inspired by Seedream 5.0 realism and high-end IMVU/The Sims virtual aesthetics. Clearly a fictional digital avatar and not a real photograph. Hyper-detailed virtual influencer design with stylized CGI masculine proportions, luxury editorial aesthetics, advanced cinematic lighting, ultra-polished 3D rendering, and “TEZZA PROMPTS” text at the bottom center in elegant minimalist typography.
+
+CAMERA & COMPOSITION
+
+Vertical 9:16 aspect ratio urban lifestyle portrait captured outdoors in soft overcast daylight with cinematic editorial framing. Full-body composition featuring the subject seated naturally on a bright yellow modern metal bench beside a matching round café table. Slight eye-level perspective with balanced framing that captures the surrounding architecture, café entrance, accessories, footwear, beverages, and relaxed street atmosphere. Subject positioned slightly left of center while maintaining generous environmental context. Sharp focus on the face, clothing texture, hands, footwear, accessories, and realistic material definition while the background remains subtly softened through cinematic depth of field.
+
+POSE & BODY POSITIONING
+
+Subject seated comfortably on the bench in a naturally relaxed masculine posture. Legs spread apart with both feet firmly planted on the ground creating a casual streetwear stance. Torso remains upright with a slight backward lean supported naturally by the seated position. Both forearms rest comfortably on the thighs while the hands remain relaxed with naturally curved fingers. Body positioning conveys effortless confidence and authentic candid lifestyle realism.
+
+HEAD POSITION & GAZE
+
+Head positioned naturally facing forward with a subtle downward inclination. Eyes remain directed toward the camera through futuristic wraparound sunglasses, maintaining a calm, reserved, and mysterious presence. Neck remains mostly concealed beneath the oversized raised fleece collar, reinforcing the relaxed winter-inspired styling and cinematic streetwear identity.
+
+FACIAL EXPRESSION
+
+Relaxed masculine facial expression with the lower face almost entirely concealed beneath the oversized fleece collar. Expression is communicated primarily through the eyes and upper facial structure, conveying calm confidence, emotional control, understated attitude, and effortless editorial streetwear aesthetics without exaggerated emotion.
+
+FACE & IDENTITY
+
+Adult male CGI avatar with defined masculine facial proportions, visible upper facial structure, thick naturally groomed eyebrows partially visible above modern wraparound sunglasses, and balanced symmetrical facial anatomy. Facial identity closely follows the reference including facial proportions, visible eye region, hairstyle silhouette, skin tone, concealed lower-face styling, and overall masculine identity while remaining clearly fictional and digitally generated instead of photoreal human appearance.
+
+HAIR
+
+Short black slightly wavy hair with naturally textured strands and soft volume concentrated across the crown and front hairline. Hair falls casually in an effortless tousled arrangement with subtle natural lift and loose movement, creating realistic strand separation and cinematic Blender-style hair simulation with detailed texture definition.
+
+ACCESSORIES & DETAILS
+
+Modern black wraparound performance sunglasses with realistic glossy reflections and premium lens rendering. Oversized high-neck gray sherpa fleece collar pulled upward to cover the lower half of the face with highly detailed soft fabric fibers and realistic material depth. Olive green quilted shoulder bag positioned naturally beside the subject on the bench. Black performance cap resting beside the bag. Two iced coffee beverages placed naturally on the bright yellow café table with realistic transparent plastic cups, condensation, ice cubes, and drinking straws. Hands display subtle skin texture and realistic anatomy with clean masculine grooming.
+
+OUTFIT
+
+Oversized gray sherpa fleece pullover with an extremely high folded collar covering the lower face. Relaxed fit featuring realistic fleece fibers, soft fabric compression, natural sleeve folds, and physically accurate textile simulation. Black athletic shorts with loose modern streetwear proportions. White crew socks paired with contemporary white athletic sneakers featuring subtle light green accent details. Outfit preserves the authentic luxury casual streetwear aesthetic with realistic material rendering and cinematic CGI quality.
+
+BODY & PHYSIQUE
+
+Athletic masculine physique with broad shoulders, muscular thighs, strong calves, balanced upper-body proportions, naturally developed arms, and relaxed seated posture. Physique maintains realistic anatomical transitions beneath the oversized clothing while preserving premium IMVU/Sims-inspired CGI masculinity and polished virtual influencer proportions.
+
+SKIN & REALISM
+
+Ultra-detailed Seedream 5.0 skin rendering with realistic pores, subtle natural skin sheen, physically accurate subsurface scattering, and detailed skin texture visible across the exposed legs, hands, and upper facial region. Preserve the extensive tattoo coverage across both legs and hands exactly as shown, maintaining the original placement, density, proportions, and visual appearance without alteration. Natural Blender-style material realism enhances the authentic CGI avatar presentation while preserving cinematic editorial quality.
+
+LIGHTING
+
+Soft overcast daylight illumination creates balanced natural lighting with smooth shadow transitions and realistic ambient reflections across the fleece fabric, skin, sunglasses, footwear, beverages, and surrounding architecture. Physically accurate Blender-style global illumination produces clean material definition, realistic shadow depth, subtle reflections, and polished cinematic editorial realism without harsh contrast.
+
+ENVIRONMENT
+
+Modern urban sidewalk café located beside a large stone architectural façade with a contemporary coffee shop entrance visible in the background. Bright yellow metal bench and matching café table provide strong visual contrast against the muted gray surroundings. Café interior remains softly visible through the glass entrance while the surrounding city environment contributes authentic metropolitan lifestyle atmosphere with subtle cinematic depth.
+
+MOOD & AESTHETIC
+
+Modern luxury streetwear aesthetic blending urban café culture, minimalist fashion, relaxed masculine confidence, and premium influencer lifestyle imagery. Calm, effortless, stylish, reserved, and cinematic atmosphere inspired by contemporary editorial fashion photography and high-end CGI virtual influencer aesthetics while preserving the authentic candid composition.
+
+STYLE & RENDER QUALITY
+
+Ultra-photorealistic Blender Cycles CGI render, cinematic realism, Seedream 5.0 masculine beauty rendering, 8K UHD quality, physically accurate lighting and materials, realistic skin micro-detail, IMVU-inspired avatar repaint aesthetics, high-fidelity masculine CGI rendering, realistic atmospheric depth, polished virtual influencer styling, advanced ray tracing, realistic reflections, luxury editorial lighting, ultra-clean cinematic render quality, and clearly fictional CGI-avatar aesthetics instead of a real photograph.
+        
+      </div>
+
+      <button class="copy-btn" onclick="copyPrompt(event)">COPIAR PROMPT</button>
+    </div>
+  </div>
+
+  <div class="smoke-overlay" id="smoke">
+    <div class="jutsu-text">PROMPT NA ONDA!</div>
+    <p style="color: white; font-family: 'Bangers', cursive; font-size: 2rem; text-align: center; margin-top: 10px;">MARQUE @thony_.vu</p>
+  </div>
+
+  <footer>
+    MARQUE <a href="https://www.instagram.com/thony_.vu" target="_blank">@thony_.vu</a><br>
+    THONY ALLEN • TEZZA PROMPTS — CONTEÚDO PROTEGIDO.
+  </footer>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+
+    // TÉCNICA 3: Carregamento dinâmico de recursos após a interação ou carregamento da página.
+    // Isso impede que bots simples que apenas leem o HTML estático encontrem as URLs das imagens.
+    window.onload = function() {
+      // Injetando as URLs via JS
+      document.getElementById('introGif').src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXYwcndjNHlxd3N6MXh3bnF2YjcxaDI2a2wza25rOWFlcWQxNGQxZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/oEiOqjku8mykiu0KOa/giphy.gif";
+      document.getElementById('cornerGif').src = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnF2am0wcnJoZmY4YTZpNGJqZ3FyN2I0ODhuejl4cmk5MmhzaXFtZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Mb9GGpjLPorX0qHSF7/giphy.gif";
+      document.getElementById('gifLeft').src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzhtc2VhaGowNG51d28yZGhoNjN3aHllOXh3NXc5dmk5YWU2a2lldiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/kfR34O48id03W35Tk0/giphy.gif";
+      document.getElementById('gifRight').src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzhtc2VhaGowNG51d28yZGhoNjN3aHllOXh3NXc5dmk5YWU2a2lldiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/kfR34O48id03W35Tk0/giphy.gif";
+      
+      // Carregando fundos
+      document.getElementById('bgImg').style.backgroundImage = "url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663238797647/mqyLDbUGvTpGCbAr.jpg')";
+      document.getElementById('startOverlay').style.backgroundImage = "url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663238797647/buSfRzJNzfaspHkV.png')";
+    };
+
+    function initPage() {
+      const overlay = document.getElementById('startOverlay');
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
+
+      music.volume = 0.5;
+      music.play().catch(err => console.log("Erro ao tocar áudio:", err));
+    }
+
+    async function copyPrompt(event) {
+      event.stopPropagation();
+      
+      const text = document.getElementById('promptContent').innerText;
+      
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+
+      const smoke = document.getElementById('smoke');
+      smoke.classList.add('active');
+      
+      setTimeout(() => {
+        smoke.classList.remove('active');
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
